@@ -1,0 +1,166 @@
+Exercise: 1
+Find the model number, speed and hard drive capacity for all the PCs with prices below $500.
+Result set: model, speed, hd.
+
+Type a query:
+select model, speed, hd from pc
+where price < 500
+
+Exercise: 2
+List all printer makers. Result set: maker.
+
+Type a query:
+Select distinct maker from product
+where type = 'printer'
+
+Exercise: 3 
+Find the model number, RAM and screen size of the laptops with prices over $1000.
+
+Type a query:
+select model, ram, screen
+from laptop
+where price > 1000
+
+Exercise: 4 
+Find all records from the Printer table containing data about color printers.
+
+Type a query:
+Select * from printer 
+where color ='y'
+
+Exercise: 5 
+Find the model number, speed and hard drive capacity of PCs cheaper than $600 having a 12x or a 24x CD drive.
+
+Type a query:
+Select model, speed, hd
+from pc
+where (cd ='12x' or cd ='24x') and price < 600
+
+Exercise: 6 
+For each maker producing laptops with a hard drive capacity of 10 Gb or higher, find the speed of such laptops. Result set: maker, speed.
+
+Type a query:
+Select distinct product.maker, laptop.speed
+from product
+join laptop
+on product.model = laptop.model
+where type = 'laptop' and hd >= 10
+
+Exercise: 7 
+Get the models and prices for all commercially available products (of any type) produced by maker B.
+
+Type a query:
+select pc.model, pc.price
+from product 
+join pc 
+on product.model = pc.model
+where maker='B'
+union 
+select laptop.model, laptop.price
+from product 
+join laptop 
+on product.model = laptop.model
+where maker='B'
+union 
+select printer.model, printer.price
+from product 
+join printer 
+on product.model=printer.model
+where maker='B'
+
+Exercise: 8 
+Find the makers producing PCs but not laptops.
+
+Type a query:
+Select distinct maker from product
+where type = 'PC' and maker not in (Select distinct maker from product where type='laptop')
+
+Exercise: 9 
+Find the makers of PCs with a processor speed of 450 MHz or more. Result set: maker.
+
+Type a query:
+Select distinct product.maker 
+from product 
+join pc 
+on product.model = pc.model
+where speed >= 450
+
+Exercise: 10
+Find the printer models having the highest price. Result set: model, price.
+
+Type a query:
+Select model, price
+from printer
+where price = (Select max(price) from printer)
+
+Exercise: 11 
+Find out the average speed of PCs.
+
+Type a query:
+Select avg(speed) as Avg_speed 
+from pc
+
+Exercise: 12 
+Find out the average speed of the laptops priced over $1000.
+
+Type a query:
+Select avg(speed) from laptop 
+where price > 1000
+
+Exercise: 13 
+Find out the average speed of the PCs produced by maker A.
+
+Type a query:
+Select avg(pc.speed) from pc 
+join product 
+on pc.model = product.model
+where maker = 'A'
+
+Exercise: 14 
+For the ships in the Ships table that have at least 10 guns, get the class, name, and country.
+
+Type a query:
+Select Ships.class, Ships.name, Classes.country
+from Ships join Classes
+on Ships.class = Classes.class
+where numGuns >= 10
+
+Exercise: 15 
+Get hard drive capacities that are identical for two or more PCs.
+Result set: hd.
+
+Type a query:
+Select hd from pc 
+group by (hd)
+having count(model) >=2
+
+
+Exercise: 16 
+Get pairs of PC models with identical speeds and the same RAM capacity. Each resulting pair should be displayed only once, i.e. (i, j) but not (j, i).
+Result set: model with the bigger number, model with the smaller number, speed, and RAM.
+
+Type a query:
+Select distinct A.model, B.model, A.speed, A.ram
+from pc as A, pc as B
+where A.model > B.model and 
+A.speed = B.speed and A.ram = B.ram
+
+
+Exercise: 17 
+Get the laptop models that have a speed smaller than the speed of any PC.
+Result set: type, model, speed.
+
+Type a query: 
+Select distinct type, laptop.model, laptop.speed
+from product, laptop 
+where type = 'laptop' and
+speed < all(SELECT speed from pc)
+
+Exercise: 18 
+Find the makers of the cheapest color printers.
+Result set: maker, price.
+
+Type a query:
+SELECT distinct product.maker, printer.price FROM printer
+JOIN product ON printer.model = product.model
+where printer.price = (select min(price) from printer where color = 'y') and printer.color = 'y'
