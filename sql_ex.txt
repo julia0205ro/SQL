@@ -164,3 +164,72 @@ Type a query:
 SELECT distinct product.maker, printer.price FROM printer
 JOIN product ON printer.model = product.model
 where printer.price = (select min(price) from printer where color = 'y') and printer.color = 'y'
+
+Exercise: 19 
+For each maker having models in the Laptop table, find out the average screen size of the laptops he produces.
+Result set: maker, average screen size.
+
+Type a query: 
+Select maker, avg(laptop.screen) as average_screen_size
+from laptop
+join product on product.model = laptop.model
+group by maker
+
+Exercise: 20
+Find the makers producing at least three distinct models of PCs.
+Result set: maker, number of PC models.
+
+Type a query: 
+Select maker, count(model) as number_of_PC_models
+from product 
+where type = 'PC'
+group by maker
+having count(model) >=3
+
+Exercise: 21
+Find out the maximum PC price for each maker having models in the PC table. Result set: maker, maximum price.
+
+Type a query: 
+Select maker, max(pc.price) as maximum_price
+from product 
+join pc on product.model = pc.model
+group by maker
+
+Exercise: 22
+For each value of PC speed that exceeds 600 MHz, find out the average price of PCs with identical speeds.
+Result set: speed, average price.
+
+Type a query:
+Select speed, avg(price) as average_price
+from pc 
+group by speed 
+having speed > 600
+
+Exercise: 23
+Get the makers producing both PCs having a speed of 750 MHz or higher and laptops with a speed of 750 MHz or higher.
+Result set: maker
+
+Select maker from product 
+left join laptop on product.model = laptop.model
+where laptop.speed>=750
+intersect
+Select maker from product 
+left join pc on product.model = pc.model
+where pc.speed>= 750
+
+Exercise: 24
+List the models of any type having the highest price of all products present in the database.
+
+Type a query:
+with the_highest_price as (
+select model, price from pc
+where pc.price = (select max(price) from pc)
+union
+select model, price from laptop
+where laptop.price = (select max(price) from laptop)
+union
+select model, price from printer
+where printer.price = (select max(price) from printer)
+)
+select model from the_highest_price
+where price = (select max(price) from the_highest_price)
