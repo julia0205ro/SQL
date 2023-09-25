@@ -233,3 +233,16 @@ where printer.price = (select max(price) from printer)
 )
 select model from the_highest_price
 where price = (select max(price) from the_highest_price)
+
+Exercise: 25 
+Find the printer makers also producing PCs with the lowest RAM capacity and the highest processor speed of all PCs having the lowest RAM capacity.
+Result set: maker.
+
+Type a query:
+Select maker from product 
+where type = 'Printer'
+intersect
+Select maker from product 
+join pc on product.model = pc.model
+where pc.ram = (select min(ram) from pc) and 
+pc.speed = (select max(speed) from pc where ram = (select min(ram) from pc))
