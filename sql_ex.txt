@@ -262,3 +262,20 @@ join product on laptop.model = product.model
 where maker = 'A'
 )
 Select avg(price) from average_pc_lap
+
+Exercise: 27
+Find out the average hard disk drive capacity of PCs produced by makers who also manufacture printers.
+Result set: maker, average HDD capacity.
+
+Type a query: 
+Select maker, avg(pc.hd) as average_HDD_capacity from product 
+join pc on product.model = pc.model
+where maker in (
+Select maker from product 
+where type = 'PC'
+intersect
+Select maker from product 
+where type = 'Printer'
+)
+group by maker
+
