@@ -303,3 +303,42 @@ Type a query:
 Select ship from Outcomes 
 where result = 'sunk'
 and battle = 'North Atlantic'
+
+Exercise: 34
+In accordance with the Washington Naval Treaty concluded in the beginning of 1922, it was prohibited to build battle ships with a displacement of more than 35 thousand tons.
+Get the ships violating this treaty (only consider ships for which the year of launch is known).
+List the names of the ships.
+
+Type a query:
+Select name from (
+Select distinct Ships.name, Ships.launched, Classes.displacement, Classes.type
+from Ships, Classes
+where Ships.class = Classes.class
+) as helped_table(name, launched, displacement, type)
+where launched >= 1922 and 
+displacement > 35000 and 
+type = 'bb'
+
+
+Exercise: 35 
+Find models in the Product table consisting either of digits only or Latin letters (A-Z, case insensitive) only.
+Result set: model, type.
+
+Type a query: 
+Select model, type from product 
+where model not like '%[^0-9]%' or
+model not like '%[^A-Z]%'
+
+Exercise: 36
+List the names of lead ships in the database (including the Outcomes table).
+
+Type a query: 
+Select name from Ships
+where name = class
+union
+Select A from (
+Select Outcomes.ship as A from Ships
+full join Outcomes 
+on Ships.name = Outcomes.ship
+where Ships.name is null) as helped_teble, Classes
+where A = Classes.class
