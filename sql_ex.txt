@@ -341,3 +341,19 @@ full join Outcomes
 on Ships.name = Outcomes.ship
 where Ships.name is null) as helped_table, Classes
 where A = Classes.class
+
+
+Exercise: 37
+Find classes for which only one ship exists in the database (including the Outcomes table).
+
+Type a query:
+Select * from (
+select Classes.class as unique_class from Classes
+join Ships on Classes.class = Ships.class
+union all
+select distinct Classes.class as unique_class from Classes
+join Outcomes on Classes.class=Outcomes.ship
+where ship not in (Select name from Ships)
+) as helped_table
+group by unique_class
+having count(unique_class) = 1
