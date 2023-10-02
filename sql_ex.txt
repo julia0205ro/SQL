@@ -357,3 +357,13 @@ where ship not in (Select name from Ships)
 ) as helped_table
 group by unique_class
 having count(unique_class) = 1
+
+Exercise: 38 
+Find countries that ever had classes of both battleships (‘bb’) and cruisers (‘bc’).
+
+Type a query:
+Select country from Classes 
+where type = 'bb'
+intersect
+Select country from Classes 
+where type = 'bc'
