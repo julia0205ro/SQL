@@ -367,3 +367,21 @@ where type = 'bb'
 intersect
 Select country from Classes 
 where type = 'bc'
+
+Exercise: 39
+Find the ships that `survived for future battles`; that is, after being damaged in a battle, they participated in another one, which occurred later.
+
+Type a query:
+Select distinct ship as survived_for_future_battles from (
+Select ship, date from Outcomes
+join Battles 
+on Outcomes.battle = Battles.name
+where result in ('damaged') 
+) as first_table
+join ( 
+Select ship as helped_ship, date as helped_date from Outcomes
+join Battles 
+on Outcomes.battle = Battles.name
+) as second_table
+on first_table.ship = second_table.helped_ship
+where first_table.date < second_table.helped_date
