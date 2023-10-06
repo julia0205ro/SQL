@@ -385,3 +385,24 @@ on Outcomes.battle = Battles.name
 ) as second_table
 on first_table.ship = second_table.helped_ship
 where first_table.date < second_table.helped_date
+
+Exercise: 40
+Get the makers who produce only one product type and more than one model. Output: maker, type.
+
+Type a query:
+Select distinct product.maker, type from product 
+join (
+Select maker from (
+Select maker, count(distinct type) as count_of_type 
+from product 
+group by maker
+having count(distinct type) = 1
+) as table_a
+join (
+Select maker as b_maker, count(model) as count_of_model from product 
+group by maker
+having count(model) > 1
+) as table_b
+on table_a.maker = table_b.b_maker
+) as table_c
+on product.maker = table_c.maker
