@@ -313,6 +313,28 @@ from Outcome_o
 left join Income_o
 on  Income_o.date = Outcome_o.date and Income_o.point = Outcome_o.point
 
+Exercise: 30
+Under the assumption that receipts of money (inc) and payouts (out) can be registered any number of times a day for each collection point [i.e. the code column is the primary key], display a table with one corresponding row for each operating date of each collection point.
+Result set: point, date, total payout per day (out), total money intake per day (inc).
+Missing values are considered to be NULL.
+
+Type a query: 
+with t3 as (Select * from (
+(Select point as inc_point, date as inc_date, sum(inc) as sum_of_inc from Income
+group by point, date
+) as t2
+full join (
+Select point as out_point, date as out_date, sum(out) as sum_of_out from Outcome
+group by point, date) as t
+on t2.inc_point = t.out_point and t2.inc_date = t.out_date)
+) 
+Select 
+case when inc_point is null then out_point else inc_point end point,
+case when inc_date is null then out_date else inc_date end date,
+sum (sum_of_out) as outcome, sum (sum_of_inc) as income
+from t3
+group by inc_point, out_point, inc_date, out_date
+
 Exercise: 31 
 For ship classes with a gun caliber of 16 in. or more, display the class and the country.
 
