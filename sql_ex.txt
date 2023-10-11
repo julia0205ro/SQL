@@ -342,6 +342,21 @@ Type a query:
 Select class, country from Classes
 where bore >= 16
 
+Exercise: 32
+One of the characteristics of a ship is one-half the cube of the calibre of its main guns (mw).
+Determine the average ship mw with an accuracy of two decimal places for each country having ships in the database.
+
+Type a query:
+Select country, round(cast((sum(a)/count(name)) as DEC(12,2)),2) as weight from
+(Select country, name, power(bore, 3)/2 as a from Classes
+join Ships on Classes.class = Ships.class
+union
+Select country, ship as name, power(bore, 3)/2 as a from Classes 
+join Outcomes on Classes.class = Outcomes.ship 
+full join Ships on Outcomes.ship = Ships.name
+where Ships.name is null) as t
+group by country
+
 Exercise: 33 
 Get the ships sunk in the North Atlantic battle.
 Result set: ship.
