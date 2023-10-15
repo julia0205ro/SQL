@@ -29,7 +29,8 @@ Select * from printer
 where color ='y'
 
 Exercise: 5 
-Find the model number, speed and hard drive capacity of PCs cheaper than $600 having a 12x or a 24x CD drive.
+Find the model number, speed and hard drive capacity of PCs 
+cheaper than $600 having a 12x or a 24x CD drive.
 
 Type a query:
 Select model, speed, hd
@@ -37,7 +38,8 @@ from pc
 where (cd ='12x' or cd ='24x') and price < 600
 
 Exercise: 6 
-For each maker producing laptops with a hard drive capacity of 10 Gb or higher, find the speed of such laptops. Result set: maker, speed.
+For each maker producing laptops with a hard drive capacity of 10 Gb or higher, 
+find the speed of such laptops. Result set: maker, speed.
 
 Type a query:
 Select distinct product.maker, laptop.speed
@@ -47,7 +49,8 @@ on product.model = laptop.model
 where type = 'laptop' and hd >= 10
 
 Exercise: 7 
-Get the models and prices for all commercially available products (of any type) produced by maker B.
+Get the models and prices for all commercially available products 
+(of any type) produced by maker B.
 
 Type a query:
 select pc.model, pc.price
@@ -136,7 +139,8 @@ having count(model) >=2
 
 
 Exercise: 16 
-Get pairs of PC models with identical speeds and the same RAM capacity. Each resulting pair should be displayed only once, i.e. (i, j) but not (j, i).
+Get pairs of PC models with identical speeds and the same RAM capacity. 
+Each resulting pair should be displayed only once, i.e. (i, j) but not (j, i).
 Result set: model with the bigger number, model with the smaller number, speed, and RAM.
 
 Type a query:
@@ -163,10 +167,12 @@ Result set: maker, price.
 Type a query:
 SELECT distinct product.maker, printer.price FROM printer
 JOIN product ON printer.model = product.model
-where printer.price = (select min(price) from printer where color = 'y') and printer.color = 'y'
+where printer.price = (select min(price) from printer where color = 'y') 
+and printer.color = 'y'
 
 Exercise: 19 
-For each maker having models in the Laptop table, find out the average screen size of the laptops he produces.
+For each maker having models in the Laptop table, 
+find out the average screen size of the laptops he produces.
 Result set: maker, average screen size.
 
 Type a query: 
@@ -187,7 +193,8 @@ group by maker
 having count(model) >=3
 
 Exercise: 21
-Find out the maximum PC price for each maker having models in the PC table. Result set: maker, maximum price.
+Find out the maximum PC price for each maker having models in the PC table. 
+Result set: maker, maximum price.
 
 Type a query: 
 Select maker, max(pc.price) as maximum_price
@@ -196,7 +203,8 @@ join pc on product.model = pc.model
 group by maker
 
 Exercise: 22
-For each value of PC speed that exceeds 600 MHz, find out the average price of PCs with identical speeds.
+For each value of PC speed that exceeds 600 MHz, find out the average price of PCs 
+with identical speeds.
 Result set: speed, average price.
 
 Type a query:
@@ -206,7 +214,8 @@ group by speed
 having speed > 600
 
 Exercise: 23
-Get the makers producing both PCs having a speed of 750 MHz or higher and laptops with a speed of 750 MHz or higher.
+Get the makers producing both PCs having a speed of 750 MHz or higher 
+and laptops with a speed of 750 MHz or higher.
 Result set: maker
 
 Select maker from product 
@@ -235,7 +244,8 @@ select model from the_highest_price
 where price = (select max(price) from the_highest_price)
 
 Exercise: 25 
-Find the printer makers also producing PCs with the lowest RAM capacity and the highest processor speed of all PCs having the lowest RAM capacity.
+Find the printer makers also producing PCs with the lowest RAM capacity 
+and the highest processor speed of all PCs having the lowest RAM capacity.
 Result set: maker.
 
 Type a query:
@@ -264,7 +274,8 @@ where maker = 'A'
 Select avg(price) from average_pc_lap
 
 Exercise: 27
-Find out the average hard disk drive capacity of PCs produced by makers who also manufacture printers.
+Find out the average hard disk drive capacity of PCs produced by makers 
+who also manufacture printers.
 Result set: maker, average HDD capacity.
 
 Type a query: 
@@ -289,7 +300,9 @@ having count(model)=1)
 as helped_table
 
 Exercise: 29
-Under the assumption that receipts of money (inc) and payouts (out) are registered not more than once a day for each collection point [i.e. the primary key consists of (point, date)], write a query displaying cash flow data (point, date, income, expense).
+Under the assumption that receipts of money (inc) and payouts (out) are registered 
+not more than once a day for each collection point [i.e. the primary key consists of (point, date)], 
+write a query displaying cash flow data (point, date, income, expense).
 Use Income_o and Outcome_o tables.
 
 Type a query: 
@@ -314,7 +327,10 @@ left join Income_o
 on  Income_o.date = Outcome_o.date and Income_o.point = Outcome_o.point
 
 Exercise: 30
-Under the assumption that receipts of money (inc) and payouts (out) can be registered any number of times a day for each collection point [i.e. the code column is the primary key], display a table with one corresponding row for each operating date of each collection point.
+Under the assumption that receipts of money (inc) 
+and payouts (out) can be registered any number of times a day for each collection point 
+[i.e. the code column is the primary key], display a table with one corresponding row 
+for each operating date of each collection point.
 Result set: point, date, total payout per day (out), total money intake per day (inc).
 Missing values are considered to be NULL.
 
@@ -343,8 +359,10 @@ Select class, country from Classes
 where bore >= 16
 
 Exercise: 32
-One of the characteristics of a ship is one-half the cube of the calibre of its main guns (mw).
-Determine the average ship mw with an accuracy of two decimal places for each country having ships in the database.
+One of the characteristics of a ship is one-half the cube 
+of the calibre of its main guns (mw).
+Determine the average ship mw with an accuracy of two decimal places 
+for each country having ships in the database.
 
 Type a query:
 Select country, round(cast((sum(a)/count(name)) as DEC(12,2)),2) as weight from
@@ -367,7 +385,8 @@ where result = 'sunk'
 and battle = 'North Atlantic'
 
 Exercise: 34
-In accordance with the Washington Naval Treaty concluded in the beginning of 1922, it was prohibited to build battle ships with a displacement of more than 35 thousand tons.
+In accordance with the Washington Naval Treaty concluded in the beginning of 1922, 
+it was prohibited to build battle ships with a displacement of more than 35 thousand tons.
 Get the ships violating this treaty (only consider ships for which the year of launch is known).
 List the names of the ships.
 
@@ -382,7 +401,8 @@ displacement > 35000 and
 type = 'bb'
 
 Exercise: 35 
-Find models in the Product table consisting either of digits only or Latin letters (A-Z, case insensitive) only.
+Find models in the Product table consisting either of digits only or Latin letters 
+(A-Z, case insensitive) only.
 Result set: model, type.
 
 Type a query: 
@@ -406,7 +426,8 @@ where A = Classes.class
 
 
 Exercise: 37
-Find classes for which only one ship exists in the database (including the Outcomes table).
+Find classes for which only one ship exists in the database 
+(including the Outcomes table).
 
 Type a query:
 Select * from (
@@ -431,7 +452,9 @@ Select country from Classes
 where type = 'bc'
 
 Exercise: 39
-Find the ships that `survived for future battles`; that is, after being damaged in a battle, they participated in another one, which occurred later.
+Find the ships that `survived for future battles`; that is, 
+after being damaged in a battle, they participated in another one, 
+which occurred later.
 
 Type a query:
 Select distinct ship as survived_for_future_battles from (
@@ -449,7 +472,8 @@ on first_table.ship = second_table.helped_ship
 where first_table.date < second_table.helped_date
 
 Exercise: 40
-Get the makers who produce only one product type and more than one model. Output: maker, type.
+Get the makers who produce only one product type and more than one model. 
+Output: maker, type.
 
 Type a query:
 Select distinct product.maker, type from product 
