@@ -1,5 +1,6 @@
-Short database description Computer firm
-The database scheme consists of four tables
+Short database description "Computer firm":
+
+The database scheme consists of four tables:
 Product(maker, model, type)
 PC(code, model, speed, ram, hd, cd, price)
 Laptop(code, model, speed, ram, hd, screen, price)
