@@ -1,3 +1,5 @@
+Short database description "Recycling_firm":
+
 The firm owns several buy-back centers for collection of recyclable materials. 
 Each of them receives funds to be paid to the recyclables suppliers. 
 Data on funds received is recorded in the table Income_o(point, date, inc)
